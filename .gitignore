@@ -1,0 +1,25 @@
+# Node.js
+node_modules/
+
+# npm
+npm-debug.log
+yarn-error.log
+
+# React
+build/
+
+# VS Code
+.vscode/
+
+# MacOS
+.DS_Store
+
+# Environment variables
+.env
+
+# Logs
+logs/
+*.log
+
+# Backend specific
+/dist
