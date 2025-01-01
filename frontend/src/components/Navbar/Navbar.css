@@ -1,0 +1,19 @@
+.relative {
+    position: relative;
+}
+.absolute {
+    position: absolute;
+}
+.bg-white {
+    background-color: white;
+}
+.bg-black {
+    background-color: black;
+}
+.text-black {
+    color: black;
+}
+.text-white {
+    color: white;
+}
+  

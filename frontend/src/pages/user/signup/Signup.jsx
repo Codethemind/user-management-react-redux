@@ -5,7 +5,12 @@ import { toast } from 'react-toastify';
 
 const Signup = () => {
   const navigate = useNavigate();
-  const [formData, setFormData] = useState({username:'', email: '', password: '' });
+  const [formData, setFormData] = useState({
+    username: '',
+    email: '',
+    password: '',
+  });
+  const [profileImage, setProfileImage] = useState(null);
   const [error, setError] = useState(null);
 
   const handleChange = (e) => {
@@ -16,17 +21,34 @@ const Signup = () => {
     }));
   };
 
+  const handleImageChange = (e) => {
+    setProfileImage(e.target.files[0]);
+  };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log(formData)
+
     try {
-      const response = await axiosInstance.post('/auth/signup', formData);
+      const formDataToSend = new FormData();
+      formDataToSend.append('username', formData.username);
+      formDataToSend.append('email', formData.email);
+      formDataToSend.append('password', formData.password);
+      if (profileImage) {
+        formDataToSend.append('image', profileImage);
+      }
+
+      const response = await axiosInstance.post('/auth/signup', formDataToSend, {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+        },
+      });
+
       console.log('Signup successful:', response.data);
-      toast.success('Registered Successfully! Login Now.')
+      toast.success('Registered Successfully! Login Now.');
       navigate('/login');
     } catch (err) {
-      setError('Login failed. Please check your credentials.');
-      console.error('Error during login:', err);
+      setError('Signup failed. Please try again.');
+      console.error('Error during signup:', err);
     }
   };
 
@@ -35,11 +57,11 @@ const Signup = () => {
       <div className="w-full bg-white rounded-lg shadow border sm:max-w-md xl:p-0">
         <div className="p-6 space-y-4 md:space-y-6 sm:p-8">
           <h1 className="text-xl font-bold leading-tight tracking-tight text-gray-900 md:text-2xl">
-            Sign in to your account
+            Sign up for an account
           </h1>
           {error && <div className="text-red-500">{error}</div>}
           <form className="space-y-4 md:space-y-6" onSubmit={handleSubmit}>
-          <div>
+            <div>
               <label
                 htmlFor="username"
                 className="block mb-2 text-sm font-medium text-gray-900"
@@ -62,7 +84,7 @@ const Signup = () => {
                 htmlFor="email"
                 className="block mb-2 text-sm font-medium text-gray-900"
               >
-                Enter Your email
+                Enter Your Email
               </label>
               <input
                 type="email"
@@ -93,14 +115,38 @@ const Signup = () => {
                 required
               />
             </div>
+            <div>
+              <label
+                htmlFor="profileImage"
+                className="block mb-2 text-sm font-medium text-gray-900"
+              >
+                Upload Profile Image
+              </label>
+              <input
+                type="file"
+                name="profileImage"
+                id="profileImage"
+                className="bg-gray-50 border border-gray-300 text-gray-900 rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5"
+                onChange={handleImageChange}
+                accept="image/*"
+              />
+            </div>
             <button
               type="submit"
               className="w-full text-white bg-gray-800 hover:bg-gray-900 focus:ring-4 focus:outline-none focus:ring-gray-500 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
             >
-              Sign in
+              Sign up
             </button>
-            <p class="text-sm font-light text-gray-500 dark:text-gray-400" onClick={()=>{navigate('/login')}}>
-                Have an account ? <a href="#" class="font-medium text-primary-600 hover:underline dark:text-primary-500">Login</a>
+            <p
+              className="text-sm font-light text-gray-500"
+              onClick={() => {
+                navigate('/login');
+              }}
+            >
+              Have an account?{' '}
+              <a href="#" className="font-medium text-primary-600 hover:underline">
+                Login
+              </a>
             </p>
           </form>
         </div>

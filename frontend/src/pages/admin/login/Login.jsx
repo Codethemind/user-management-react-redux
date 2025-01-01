@@ -22,7 +22,6 @@ const Login = () => {
     e.preventDefault();
     try {
       const response = await axiosInstance.post('/admin/login', formData);
-      console.log(response)
       const user = {
         name: response.data.name,
         email: response.data.email,
@@ -31,8 +30,8 @@ const Login = () => {
 
       sessionStorage.setItem('admin', JSON.stringify(user));
       sessionStorage.setItem('token', token);
+      console.log("inside login", user)
       dispatch(loginSuccess({ user, token }));
-      navigate('/admin/dashboard')
     } catch (err) {
       setError('Login failed. Please check your credentials.');
       console.error('Error during login:', err);

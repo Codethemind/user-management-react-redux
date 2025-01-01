@@ -4,6 +4,7 @@ import dotenv from 'dotenv';
 import mongoose from 'mongoose';
 import authRoutes from './routes/authRoutes';
 import adminRoutes from './routes/adminRoutes';
+import path from 'path';
 
 dotenv.config();
 
@@ -13,6 +14,7 @@ app.use(cors());
 app.use(express.json());
 app.use('/api/auth', authRoutes);
 app.use('/api/admin', adminRoutes);
+app.use('/uploads', express.static(path.join(__dirname, '../uploads')));
 
 mongoose.connect(process.env.MONGO_URI as string)
   .then(() => console.log('MongoDB connected'))

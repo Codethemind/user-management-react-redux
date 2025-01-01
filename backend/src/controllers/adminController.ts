@@ -100,6 +100,7 @@ export const getUserData = async (req:Request, res:Response) => {
 
 export const editUser = async (req: Request, res: Response) => {
     try {
+        console.log('edit user fun called');
         const { _id, name, email } = req.body;
         const user = await User.findById(_id);
 
@@ -147,6 +148,36 @@ export const deleteUser = async (req: Request, res: Response) => {
         });
     }
 };
+export const editAnUser = async (req: Request, res: Response) => {
+    console.log("edit an user fun called",editAnUser);
+    const { name } = req.body;
+    const { email } = req.params;
+
+    try {
+        const updatedUser = await User.findOneAndUpdate(
+            { email },
+            { name },
+            { new: true } 
+        );
+
+        if (!updatedUser) {
+            return res.status(404).json({ message: 'User not found' });
+        }
+
+        return res.status(200).json({
+            success: true,
+            message: 'User updated successfully',
+            data: updatedUser,
+        });
+    } catch (error) {
+        console.error('Error updating user:', error);
+        return res.status(500).json({
+            success: false,
+            message: 'An error occurred while updating the user',
+        });
+    }
+};
+
 export const addUser = async (req:Request, res:Response) => {
     const { name, email, password } = req.body;
 

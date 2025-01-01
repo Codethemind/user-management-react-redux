@@ -1,5 +1,5 @@
 import { Router, Request, Response } from 'express';
-import { adminSignup, adminLogin, fetchData, getUserData,editUser,deleteUser,addUser } from '../controllers/adminController';
+import { adminSignup, adminLogin, fetchData, getUserData,editUser,deleteUser,addUser, editAnUser } from '../controllers/adminController';
 
 const router = Router();
 
@@ -26,5 +26,8 @@ router.delete('/delete', async (req: Request, res: Response) => {
 });
 router.post('/add', async (req: Request, res: Response) => {
     await addUser(req, res);
+});
+router.put('/editAnName/:email', async (req: Request, res: Response) => {
+    await editAnUser(req, res);
 });
 export default router;

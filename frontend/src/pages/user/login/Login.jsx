@@ -25,6 +25,7 @@ const Login = () => {
       const response = await axiosInstance.post('/auth/login', formData);
       console.log(response)
       const user = {
+        image:response.data.image,
         name: response.data.name,
         email: response.data.email,
       };
