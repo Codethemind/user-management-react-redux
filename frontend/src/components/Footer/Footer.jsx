@@ -1,5 +1,4 @@
 import React, { useState } from 'react'
-import './Footer.css'
 
 const Footer = () => {
   const [darkMode, setDarkMode] = useState(true)

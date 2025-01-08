@@ -4,16 +4,19 @@ import React, { useEffect, useState } from 'react';
 import { fetchUsersData } from '../../../redux/slices/adminSlice';
 import { toast } from 'react-toastify';
 import { setSearchTerm } from '../../../redux/slices/adminSlice';
+import { useNavigate } from 'react-router-dom';
+import { logout } from '../../../redux/slices/userSlice'; // Assuming you have a logout action in your userSlice
 
 const Dashboard = () => {
   const dispatch = useDispatch();
-  const { users,filteredUsers,searchTerm ,loading, error } = useSelector((state) => state.admin);
+  const { users, filteredUsers, searchTerm, loading, error } = useSelector((state) => state.admin);
   
   const [selectedUser, setSelectedUser] = useState(null);
   const [modalOpen, setModalOpen] = useState(false);
   const [editModalOpen, setEditModalOpen] = useState(false);
   const [newUser, setNewUser] = useState({ name: '', email: '', password: '' });
   const [darkMode, setDarkMode] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(fetchUsersData());
@@ -24,6 +27,13 @@ const Dashboard = () => {
       toast.error(error);
     }
   }, [error]);
+
+  const handleLogout = () => {
+    dispatch(logout()); // Clear Redux state
+    sessionStorage.clear(); // Clear session storage
+    toast.success('Logged out successfully');
+    navigate('/login'); // Redirect to login page
+  };
 
   const handleAddUser = async () => {
     try {
@@ -36,6 +46,7 @@ const Dashboard = () => {
       toast.error('Error adding user');
     }
   };
+  
   const handleSearch = (e) => {
     dispatch(setSearchTerm(e.target.value));
   }
@@ -83,14 +94,14 @@ const Dashboard = () => {
   return (
     <div
       className={`min-h-screen transition-all ${
-        darkMode ? 'bg-gray-800 text-white' : 'bg-gray-100 text-gray-800'
+        darkMode ? 'bg-gray-800 text-white' : 'bg-gradient-to-r from-blue-400 via-purple-500 to-pink-500 text-gray-800'
       }`}
     >
       <div className="max-w-7xl mx-auto p-4">
         <div className="flex justify-between items-center mb-4">
           <h1 className="text-3xl font-bold">Admin Dashboard</h1>
           <div className="flex items-center space-x-4">
-          <input
+            <input
               type="text"
               placeholder="Search users..."
               value={searchTerm}
@@ -102,6 +113,12 @@ const Dashboard = () => {
               className="bg-blue-500 text-white p-2 rounded-lg hover:bg-blue-600 transition"
             >
               Add User
+            </button>
+            <button
+              onClick={handleLogout}
+              className="bg-red-500 text-white p-2 rounded-lg hover:bg-red-600 transition"
+            >
+              Logout
             </button>
             <button
               onClick={() => setDarkMode(!darkMode)}

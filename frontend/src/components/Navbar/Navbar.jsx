@@ -1,4 +1,4 @@
-import './Navbar.css';
+
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout, updateName } from '../../redux/slices/userSlice';
