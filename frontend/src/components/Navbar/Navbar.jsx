@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { logout, updateName } from '../../redux/slices/userSlice';
 import { asynEditUserName } from '../../redux/slices/userSlice';
-const Navbar = () => {
+const Navbar = (prop) => {
   const user = useSelector((state) => state.user.user);
   const [isOpen, setIsOpen] = useState(false);
   const [darkMode, setDarkMode] = useState(true);
@@ -42,7 +42,7 @@ const Navbar = () => {
         <div className="font-bold text-xl">
           {`${user.name}'s Website`}
         </div>
-        <h1> Name from input field: {inputStr} </h1>
+        <h1> Name from input field: {prop.inputStr} </h1>
         <button
           className="lg:hidden text-black dark:text-white"
           onClick={toggleMenu}

@@ -94,8 +94,8 @@ const Login = () => {
             >
               Login
             </button>
-            <p class="text-sm font-light text-gray-500 dark:text-gray-400" onClick={()=>{navigate('/signup')}}>
-                Don’t have an account yet? <a href="#" class="font-medium text-primary-600 hover:underline dark:text-primary-500">Sign up</a>
+            <p className="text-sm font-light text-gray-500 dark:text-gray-400" onClick={()=>{navigate('/signup')}}>
+                Don’t have an account yet? <a href="#" className="font-medium text-primary-600 hover:underline dark:text-primary-500">Sign up</a>
             </p>
           </form>
         </div>

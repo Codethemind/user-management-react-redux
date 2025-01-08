@@ -9,7 +9,7 @@ const Home = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user.user);
   const token = useSelector((state) => state.user.token);
-  const [inputValue, setInputValue] = useState();
+  const [inputValue, setInputValue] = useState('');
 
   const handleInputChange = (e) => {
     setInputValue(e.target.value);
@@ -33,7 +33,7 @@ const Home = () => {
 
   return (
     <div className="flex flex-col min-h-screen bg-off-white text-black">
-        <Navbar />
+        <Navbar inputStr={inputValue} />
 
         <h1>input box</h1>
         <input type="text" onChange={handleInputChange}/>

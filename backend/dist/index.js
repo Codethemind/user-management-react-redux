@@ -8,14 +8,18 @@ const cors_1 = __importDefault(require("cors"));
 const dotenv_1 = __importDefault(require("dotenv"));
 const mongoose_1 = __importDefault(require("mongoose"));
 const authRoutes_1 = __importDefault(require("./routes/authRoutes"));
+const adminRoutes_1 = __importDefault(require("./routes/adminRoutes"));
+const path_1 = __importDefault(require("path"));
 dotenv_1.default.config();
 const app = (0, express_1.default)();
 app.use((0, cors_1.default)());
 app.use(express_1.default.json());
 app.use('/api/auth', authRoutes_1.default);
-mongoose_1.default.connect(process.env.MONGO_URI)
+app.use('/api/admin', adminRoutes_1.default);
+app.use('/uploads', express_1.default.static(path_1.default.join(__dirname, '../uploads')));
+mongoose_1.default.connect('mongodb://localhost:27017/usermanagment_react')
     .then(() => console.log('MongoDB connected'))
-    .catch(err => console.log(err));
+    .catch(err => console.error('MongoDB connection error:', err));
 app.get('/', (req, res) => {
     res.send('API is running');
 });
