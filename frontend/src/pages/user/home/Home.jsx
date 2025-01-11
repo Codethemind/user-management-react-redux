@@ -32,7 +32,7 @@ const Home = () => {
 
       <main className="flex-grow p-6">
         <div className="max-w-4xl mx-auto">
-          <div className="mb-6">
+          {/* <div className="mb-6">
             <label
               htmlFor="input-box"
               className="block text-lg font-medium text-gray-700 mb-2"
@@ -47,13 +47,13 @@ const Home = () => {
               className="w-full p-3 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
               placeholder="Type something here..."
             />
-          </div>
+          </div> */}
 
           {user ? (
             <div className="text-center space-y-6">
               <div className="relative w-32 h-32 mx-auto rounded-full overflow-hidden border-4 border-gray-300 shadow-md">
                 <img
-                  src={`http://localhost:5001/${user.image}`}
+                  src={`http://localhost:5011/${user.image}`}
                   alt={`${user.name}'s profile`}
                   className="w-full h-full object-cover"
                   onError={(e) => (e.target.src = '/placeholder-profile.png')}

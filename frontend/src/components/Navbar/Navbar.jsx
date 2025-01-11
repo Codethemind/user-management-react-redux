@@ -42,7 +42,7 @@ const Navbar = (prop) => {
         <div className="font-bold text-xl">
           {`${user.name}'s Website`}
         </div>
-        <h1> Name from input field: {prop.inputStr} </h1>
+        {/* <h1> Name from input field: {prop.inputStr} </h1> */}
         <button
           className="lg:hidden text-black dark:text-white"
           onClick={toggleMenu}
